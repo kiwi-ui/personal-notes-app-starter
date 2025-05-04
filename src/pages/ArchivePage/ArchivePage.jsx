@@ -1,16 +1,22 @@
 import React, { useEffect, useState } from 'react'
-import { archiveNote, getActiveNotes, getArchivedNotes } from '../../utils/local-data';
+import { archiveNote, getActiveNotes, getArchivedNotes, unarchiveNote } from '../../utils/local-data';
+import { useNavigate } from 'react-router-dom';
 
 const ArchivePage = () => {
     const [archivedNote, setArchivedNote] = useState([])
-
+    const navigate = useNavigate();
     useEffect(() => {
         setArchivedNote(getArchivedNotes());
         console.log(getArchivedNotes());
     }, [])
-    
+
+    const handleUnarchive = (id) => {
+        unarchiveNote(id);
+        setArchivedNote(getArchivedNotes());
+    }
     return (
     <>
+        <div onClick={() => navigate('/')}>back</div>
         {
          archivedNote.map((note,index) => 
          (
@@ -32,7 +38,8 @@ const ArchivePage = () => {
                 <div className="note-item__body">
                     { note.body }
                 </div>
-                <button type="button" onClick={() => handleDeleteNote(note.id)}>Delete</button>
+                {/* <button type="button" onClick={() => handleDeleteNote(note.id)}>Delete</button> */}
+                <button type="button" onClick={ () => handleUnarchive(note.id) }>Unarchive</button>
             </div>
          ))
          }
