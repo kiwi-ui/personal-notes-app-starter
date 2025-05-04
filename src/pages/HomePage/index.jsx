@@ -1,15 +1,14 @@
 import React, { useEffect, useState } from 'react'
 import { addNote, archiveNote, deleteNote, getActiveNotes, getAllNotes, getArchivedNotes, getNote, unarchiveNote } from '../../utils/local-data'
 import { useNavigate } from 'react-router-dom';
-import FormAddNewNote from '../../components/Modal/FormAddNewNote';
+import AddNotePage from '../AddNotePage';
 
 const HomePage = () => {
   const [Contacts, setContacts] = useState([]);
-  const [showModal, setShowModal] = useState(false);
-  const [formData, setFormData] = useState({
-	  title: '',
-	  body: ''
-	});
+//   const [formData, setFormData] = useState({
+// 	  title: '',
+// 	  body: ''
+// 	});
   
   const navigate = useNavigate();
 
@@ -26,13 +25,6 @@ const HomePage = () => {
 	setContacts(getAllNotes(id));
   }
 
-   const handleChange = (event) => {
-	  const { name, value } = event.target;
-	  setFormData({
-		...formData,
-		[name]: value
-	  });
-	};
 	
 	const handleAddNote = (event) => {
 		event.preventDefault();
@@ -48,9 +40,8 @@ const HomePage = () => {
 
   return (
     <main className="main">
-		<button type="button" onClick={ () => setShowModal(e => !e) }>Tambah Catatan</button>
+		<button type="button" onClick={ () => navigate('/notes/new')}>Tambah Catatan</button>
 		<button type="button" onClick={ () => navigate('/archive') }>Archived pages</button>
-		{ showModal && <FormAddNewNote handleChange={ handleChange } handleAddNote={ handleAddNote } formData={formData}/> }
 		
 		<div className="app-container body">
 			{Contacts.length ? 

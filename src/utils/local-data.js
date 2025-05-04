@@ -54,7 +54,6 @@ function getNote(id) {
 
 function getActiveNotes() {
   const activeNotes = notes.filter((note) => !note.archived);
-  console.log(activeNotes)
   return activeNotes;
 }
 
