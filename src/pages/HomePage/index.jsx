@@ -22,15 +22,9 @@ const HomePage = () => {
 
   const handleDeleteNote = (id) => {
 	deleteNote(id);
-	setContacts(getAllNotes(id));
+	setContacts(getActiveNotes);
   }
 
-	
-	const handleAddNote = (event) => {
-		event.preventDefault();
-		addNote(formData);
-		setContacts(getActiveNotes());
-	  };
 	
 	const handleArchive = (id) => {
 		archiveNote(id);
