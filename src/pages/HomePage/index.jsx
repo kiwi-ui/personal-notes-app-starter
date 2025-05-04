@@ -5,11 +5,6 @@ import AddNotePage from '../AddNotePage';
 
 const HomePage = () => {
   const [Contacts, setContacts] = useState([]);
-//   const [formData, setFormData] = useState({
-// 	  title: '',
-// 	  body: ''
-// 	});
-  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -17,7 +12,7 @@ const HomePage = () => {
   }, [])
 
   const handleGetDetailed = (id) => {
-	navigate(`/${ id }`);
+	navigate(`/detail/${ id }`);
   }
 
   const handleDeleteNote = (id) => {
@@ -26,11 +21,11 @@ const HomePage = () => {
   }
 
 	
-	const handleArchive = (id) => {
-		archiveNote(id);
-		setContacts(getActiveNotes());
-		console.log(getArchivedNotes());
-	}
+  const handleArchive = (id) => {
+	archiveNote(id);
+	setContacts(getActiveNotes());
+	console.log(getArchivedNotes());
+   }
 
   return (
     <main className="main">
