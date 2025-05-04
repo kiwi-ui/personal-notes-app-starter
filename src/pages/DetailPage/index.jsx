@@ -10,7 +10,7 @@ const DetailPage = ({ selectedContact }) => {
     <>
     {note ? 
 
-<div className="note-item">
+      <div className="note-item">
           <div className="note-item__title">
           { note.title }
           </div>
