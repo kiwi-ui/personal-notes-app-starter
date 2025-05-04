@@ -17,7 +17,7 @@ const HomePage = () => {
     setContacts(getActiveNotes());
   }, [])
 
-  const getDetailedNote = (id) => {
+  const handleGetDetailed = (id) => {
 	navigate(`/${ id }`);
   }
 
@@ -79,7 +79,8 @@ const HomePage = () => {
 										{ contact.body }
 									</div>
 									<button type="button" onClick={ () => handleDeleteNote(contact.id) }>Delete</button>
-									<button type="button" onClick={ () => handleArchive(contact.id) }>Simpan</button>	
+									<button type="button" onClick={ () => handleArchive(contact.id) }>Simpan</button>
+									<button type="button" onClick={ () => handleGetDetailed(contact.id) }>See detail</button>	
 								</div>
 							) 
 						}

@@ -1,15 +1,16 @@
 import React from 'react'
 import { getNote } from '../../utils/local-data'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 
-const DetailPage = ({ selectedContact }) => {
+const DetailPage = () => {
   const { id } = useParams();
   const note = getNote(id);
+  const navigate = useNavigate();
 
   return (
     <>
+    <button type='button' onClick={ () => navigate('/') }>X</button>
     {note ? 
-
       <div className="note-item">
           <div className="note-item__title">
           { note.title }
