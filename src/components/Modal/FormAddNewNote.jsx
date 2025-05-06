@@ -1,7 +1,7 @@
-import React, { useState } from 'react'
-import { addNote } from '../../utils/local-data';
+import React from 'react'
+import PropTypes from 'prop-types';
 
-const FormAddNewNote = ({formData, handleChange, handleAddNote}) => {
+const FormAddNewNote = ({ formData, handleChange, handleAddNote }) => {
   return (
     <div>
       <form onSubmit={handleAddNote}>
@@ -33,3 +33,9 @@ const FormAddNewNote = ({formData, handleChange, handleAddNote}) => {
 };
 
 export default FormAddNewNote;
+
+FormAddNewNote.protoTypes = {
+  formData: PropTypes.object.isRequired,
+  handleChange: PropTypes.func.isRequired,
+  handleAddNote: PropTypes.func.isRequired
+}

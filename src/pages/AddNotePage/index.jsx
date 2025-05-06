@@ -18,21 +18,20 @@ const AddNotePage = () => {
     const handleAddNote = (event) => {
         event.preventDefault();
 		addNote(formData);
-		// setContacts(getActiveNotes());
         navigate('/');
     }
 
   return (
     <div>
-      <form onSubmit={handleAddNote}>
+      <form onSubmit={ handleAddNote }>
         <div>
           <label htmlFor="title">judul</label>
           <input
             type="text"
             id="title"
             name="title"
-            value={formData.title}
-            onChange={handleChange}
+            value={ formData.title }
+            onChange={ handleChange }
           />
         </div>
 
@@ -41,8 +40,8 @@ const AddNotePage = () => {
           <textarea
             id="body"
             name="body"
-            value={formData.body}
-            onChange={handleChange}
+            value={ formData.body }
+            onChange={ handleChange }
           />
         </div>
 

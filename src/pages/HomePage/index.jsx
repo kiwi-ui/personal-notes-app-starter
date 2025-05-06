@@ -12,67 +12,69 @@ const HomePage = () => {
   }, [])
 
   const handleGetDetailed = (id) => {
-	navigate(`/detail/${ id }`);
+		navigate(`/detail/${ id }`);
   }
 
   const handleDeleteNote = (id) => {
-	deleteNote(id);
-	setContacts(getActiveNotes);
+		deleteNote(id);
+		setContacts(getActiveNotes);
   }
 
 	
   const handleArchive = (id) => {
-	archiveNote(id);
-	setContacts(getActiveNotes());
-	console.log(getArchivedNotes());
+		archiveNote(id);
+		setContacts(getActiveNotes());
    }
 
   return (
     <main className="main">
-		<button type="button" onClick={ () => navigate('/notes/new')}>Tambah Catatan</button>
-		<button type="button" onClick={ () => navigate('/archive') }>Archived pages</button>
+				<button type="button" onClick={ () => navigate('/notes/new')}>Tambah Catatan</button>
+				<button type="button" onClick={ () => navigate('/archive') }>Archived pages</button>
 		
-		<div className="app-container body">
-			{Contacts.length ? 
-	
-			<div className="notes-list">
-				{
-					Contacts.map((contact) =>
-						{
-							return (
-								<div key={ contact.id } className="note-item">
-									<div className="note-item__title">
-										{ contact.title }
-									</div>
-
-									<div className="note-item__createdAt">
+				<div className="app-container body">
+					{ 
+						Contacts.length ? 
+							<div className="notes-list">
+								{
+									Contacts.map((contact) =>
 										{
-											new Date(contact.createdAt).toLocaleDateString("id-ID", {
-												day: "numeric",
-												month: "long",
-												year: "numeric"
-											}) 
-										}
-									</div>
+											return (
+												<div key={ contact.id } className="note-item">
+														<div className="note-item__title">
+															{ contact.title }
+														</div>
 
-									<div className="note-item__body">
-										{ contact.body }
-									</div>
-									<button type="button" onClick={ () => handleDeleteNote(contact.id) }>Delete</button>
-									<button type="button" onClick={ () => handleArchive(contact.id) }>Simpan</button>
-									<button type="button" onClick={ () => handleGetDetailed(contact.id) }>See detail</button>	
-								</div>
-							) 
-						}
-					)
-				}
-			</div> 
-			:
-			<div className="note-list-empty">
-				<p className="p">"Tidak ada catatan"</p> 
-			</div>}
-			
-		</div>
+														<div className="note-item__createdAt">
+															{
+																new Date(contact.createdAt).toLocaleDateString("id-ID", {
+																	day: "numeric",
+																	month: "long",
+																	year: "numeric"
+																}) 
+															}
+														</div>
+
+														<div className="note-item__body">
+															{ contact.body }
+														</div>
+
+														<button type="button" onClick={ () => handleDeleteNote(contact.id) }>Delete</button>
+														<button type="button" onClick={ () => handleArchive(contact.id) }>Simpan</button>
+														<button type="button" onClick={ () => handleGetDetailed(contact.id) }>See detail</button>	
+												</div>
+											) 
+										}
+									)
+								}
+							</div> 
+
+							:
+
+							<div className="note-list-empty">
+								<p className="p">"Tidak ada catatan"</p> 
+							</div> 
+					}
+				</div>
     </main>
   )
 }

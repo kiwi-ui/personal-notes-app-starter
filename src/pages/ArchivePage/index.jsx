@@ -38,7 +38,6 @@ const ArchivePage = () => {
                 <div className="note-item__body">
                     { note.body }
                 </div>
-                {/* <button type="button" onClick={() => handleDeleteNote(note.id)}>Delete</button> */}
                 <button type="button" onClick={ () => handleUnarchive(note.id) }>Unarchive</button>
             </div>
          ))
