@@ -9,12 +9,15 @@ const SearchBar = ({ onSearch }) => {
   };
 
   return (
-    <input
-      type="text"
-      placeholder="Search..."
-      value={ searchTerm }
-      onChange={ handleInputChange }
-    />
+    <form className="d-flex" role="search">
+        <input
+            type="search"
+            placeholder="Search"
+            value={ searchTerm }
+            onChange={ handleInputChange }
+            className="form-control me-2" aria-label="Search"
+        />
+    </form>
   );
 }
 
