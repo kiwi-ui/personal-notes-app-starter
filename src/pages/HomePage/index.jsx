@@ -36,8 +36,11 @@ const HomePage = ({ notes, handleGetDetailed, handleDeleteNote, handleArchive } 
           }
         </div> 
         :
-        <div className="note-list-empty position-absolute top-50 start-50">
-            <p className="text-white">"Tidak ada catatan"</p> 
+        <div className="note-list-empty d-flex position-relative justify-content-center align-items-center" style={{height: '50vh'}}>
+            <p className="text-white text-center">
+                <h3>No Notes Available</h3>
+                <p>Please add a new note to get started.</p>
+            </p> 
         </div> 
       }
         <Link type="button" className=" d-flex  p-3 rounded-3 position-sticky btn-add float-end me-3 action" to="/note/new"><FaPlus /></Link>

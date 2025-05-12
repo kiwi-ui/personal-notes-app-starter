@@ -26,7 +26,7 @@ const ArchivePage = ({ keyword }) => {
   }
 
   return (
-      <section className="app-container d-flex align-items-center p-5">
+      <section className="app-container">
         { archivedNotes.length ?
           <div className="notes-list">
             { archivedNotes.map((note, index) => 
@@ -49,9 +49,12 @@ const ArchivePage = ({ keyword }) => {
             }
           </div>
           :
-          <div className="note-list-empty position-absolute top-50 start-50"> 
-              <p className="text-white">"Tidak ada catatan"</p> 
-          </div> 
+        <div className="note-list-empty d-flex position-relative justify-content-center align-items-center" style={{height: '50vh'}}>
+            <p className="text-white text-center">
+                <h3>No Notes Available</h3>
+                <p>Please add a new note to get started.</p>
+            </p> 
+        </div> 
         }
         
       </section>
