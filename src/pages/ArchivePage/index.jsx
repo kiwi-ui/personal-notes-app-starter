@@ -61,7 +61,7 @@ const ArchivePage = ({ keyword }) => {
   )
 }
 
-export default ArchivePage
+export default ArchivePage;
 
 ArchivePage.propsTypes = {
   keyword: PropTypes.string.isRequired

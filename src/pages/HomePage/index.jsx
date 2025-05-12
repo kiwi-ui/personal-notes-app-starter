@@ -49,7 +49,7 @@ const HomePage = ({ notes, handleGetDetailed, handleDeleteNote, handleArchive } 
   )
 }
 
-export default HomePage
+export default HomePage;
 
 HomePage.propsTypes = {
   notes: PropTypes.array.isRequired,
