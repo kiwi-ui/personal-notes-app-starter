@@ -7,13 +7,12 @@ const ArchivePage = ({ keyword }) => {
   const [archivedNotes, setArchivedNotes] = useState([])
   
   useEffect(() => {
-    const a = getArchivedNotes()
+    const notes = getArchivedNotes();
     if (keyword){
-      const filteredNotes = a.filter((note) =>
+      const filteredNotes = notes.filter((note) =>
       note.title.toLowerCase().includes(keyword.toLowerCase()) ||
       note.body.toLowerCase().includes(keyword.toLowerCase())
     );
-    console.log(filteredNotes)
     setArchivedNotes(filteredNotes);
     } else {
       setArchivedNotes(getArchivedNotes());

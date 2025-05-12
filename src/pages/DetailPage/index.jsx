@@ -1,6 +1,6 @@
 import { showFormattedDate } from '../../utils';
 import { getNote } from '../../utils/local-data'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom'
 
 const DetailPage = () => {
   const { id } = useParams();

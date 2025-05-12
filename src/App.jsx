@@ -6,7 +6,7 @@ import ArchivePage from './pages/ArchivePage';
 import AddNotePage from './pages/AddNotePage';
 import NotFoundPage from './pages/NotFoundPage';
 import SearchBar from './components/SearchBar/SearchBar';
-import { archiveNote, deleteNote, getActiveNotes, getArchivedNotes } from './utils/local-data';
+import { archiveNote, deleteNote, getActiveNotes } from './utils/local-data';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 

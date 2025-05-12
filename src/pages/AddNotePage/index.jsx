@@ -1,33 +1,32 @@
 import { useState } from 'react'
 import { addNote, getActiveNotes } from '../../utils/local-data';
-import { useNavigate } from 'react-router-dom';
 
 const AddNotePage = ({ setNotes }) => {
   const [formData, setFormData] = useState({
-      title: '',
-      body: ''
+    title: '',
+    body: ''
   });
   const handleChange = (event) => {
-      const { name, value } = event.target;
-      setFormData({
-        ...formData,
-        [name]: value
-      });
+    const { name, value } = event.target;
+    setFormData({
+      ...formData,
+      [name]: value
+    });
   };
   const handleAddNote = (event) => {
-      event.preventDefault();
-      const activeNotes = getActiveNotes();
-      if (!formData.title || !formData.body) {
-        alert('Judul dan isi harus diisi');
-        return;
-      }else {
-        addNote(formData);
-        setNotes([...activeNotes, formData]);
-        setFormData({
-          title: '',
-          body: ''  
-        })
-      }
+    event.preventDefault();
+    const activeNotes = getActiveNotes();
+    if (!formData.title || !formData.body) {
+      alert('Judul dan isi harus diisi');
+      return;
+    } else {
+      addNote(formData);
+      setNotes([...activeNotes, formData]);
+      setFormData({
+        title: '',
+        body: ''  
+      })
+    }
   }
 
   return (
