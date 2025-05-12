@@ -1,42 +1,28 @@
-import React from 'react'
+import { showFormattedDate } from '../../utils';
 import { getNote } from '../../utils/local-data'
 import { useNavigate, useParams } from 'react-router-dom'
 
 const DetailPage = () => {
   const { id } = useParams();
   const note = getNote(id);
-  const navigate = useNavigate();
 
   return (
-    <>
-    <button type='button' onClick={ () => navigate('/') }>X</button>
-    { note ? 
-        <div className="note-item">
-            <div className="note-item__title">
-             { note.title }
+    <section className="text-white app-container d-flex flex-column justify-content-center">
+        <div className="detail-page w-75">
+            <div className="detail-page__title">
+              { note.title }
             </div>
         
-            <div className="note-item__createdAt">
-              {
-                new Date(note.createdAt).toLocaleDateString("id-ID", {
-                  day: "numeric",
-                  month: "long",
-                  year: "numeric"
-                }) 
-              }
+            <div className="detail-page__createdAt">
+              { showFormattedDate(note.createdAt) }
             </div>
           
-            <div className="note-item__body">
+            <div className="detail-page__body">
               { note.body }
             </div>
-        </div>
-      : 
-      <div className="note-list-empty">
-          <p className="p">"Tidak ada catatan"</p> 
-      </div>
-    }
-    </>
+        </div> 
+    </section>
   )
 }
 
-export default DetailPage
+export default DetailPage;

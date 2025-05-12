@@ -1,12 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
-import { Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes } from 'react-router-dom';
 import ArchivePage from './pages/ArchivePage';
 import AddNotePage from './pages/AddNotePage';
 import NotFoundPage from './pages/NotFoundPage';
 import SearchBar from './components/SearchBar/SearchBar';
-import { archiveNote, deleteNote, getActiveNotes } from './utils/local-data';
+import { archiveNote, deleteNote, getActiveNotes, getArchivedNotes } from './utils/local-data';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
@@ -18,56 +18,61 @@ function App() {
 
   useEffect (() => {
     const activeNotes = getActiveNotes();
-      if (keyword) {
-        const filteredNotes = activeNotes.filter((note) =>
-          note.title.toLowerCase().includes(keyword.toLowerCase()) ||
-          note.body.toLowerCase().includes(keyword.toLowerCase())
-        );
+    if (keyword) {
+      const filteredNotes = activeNotes.filter((note) =>
+        note.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        note.body.toLowerCase().includes(keyword.toLowerCase())
+      );
 
-        setNotes(filteredNotes);
-      } else {
-        setNotes(activeNotes);
-      }
-  }, [keyword])
+      setNotes(filteredNotes);
+      console.log(notes)
+    } else {
+      setNotes(activeNotes);
+    }
+  }, [keyword]);
 
   const handleSearch = (query) => {
-    setSearchParams({keyword: query});
-  }
+    setSearchParams({ keyword: query });
+  };
 
   const handleGetDetailed = (id) => {
     navigate(`/detail/${ id }`);
-  }
+  };
 
   const handleDeleteNote = (id) => {
     const confirmDelete = window.confirm('Yakin ingin menghapus catatan ini?');
+
     if(confirmDelete){
       deleteNote(id);
       setNotes(getActiveNotes());
     }
-  }
+  };
 
   const handleArchive = (id) => {
     archiveNote(id);
     setNotes(getActiveNotes());
-  }
+  };
 
   return (
     <>
-        <nav className="navbar navbar-expand-lg bg-warning">
+        <nav className="navbar navbar-expand-lg py-3">
             <div className="container-fluid">
-                <a className="navbar-brand">Notes App</a>
-                <button className="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                  <span className="navbar-toggler-icon"></span>
+                <a className="text-white navbar-brand">Notes App</a>
+                <button className="bg-white navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span className="navbar-toggler-icon"></span>
                 </button>
 
-                <div className="collapse navbar-collapse" id="navbarNavAltMarkup">
-                    <div className="navbar-nav">
-                        <a className="nav-link active" aria-current="page" href="#">Home</a>
-                        <a className="nav-link" href="#">Archive</a>
-                    </div>
+                <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                    <ul className=" nav nav-underline gap-2">
+                        <li className="nav-item">
+                            <Link className="pb-1 text-white nav-link text-decoration-none" to="/">Home</Link>
+                        </li>
+                        <li className="nav-item">
+                            <Link className="pb-1 text-white nav-link text-decoration-none" to="/archive">Archive</Link>
+                        </li>
+                    </ul>
+                    <SearchBar onSearch={ handleSearch }/>
                 </div>
-                
-                <SearchBar />
             </div>
         </nav>
 
@@ -89,13 +94,15 @@ function App() {
                   }
                 />
                 <Route path='/detail/:id' element={ <DetailPage /> }/>
-                <Route path='/archive' element={ <ArchivePage /> } />
-                <Route path='/note/new' element={ <AddNotePage /> } /> 
+                <Route path='/archive' element={ <ArchivePage keyword = { keyword } /> } />
+                <Route path='/note/new' element={ <AddNotePage setNotes = { setNotes } /> } /> 
                 <Route path='*' element={ <NotFoundPage /> } />
             </Routes>
         </main>
 
-        <footer></footer>
+        <footer className="bg-dark text-white bottom-0 py-3 position-relative w-100 d-flex">
+            <p className="mb-0 text-center w-100">© {new Date().getFullYear()} Yusni Anggara. All rights reserved.</p>
+        </footer>
     </>
   );
 }

@@ -1,48 +1,60 @@
-import React, { useEffect, useState } from 'react'
-import { archiveNote, getActiveNotes, getArchivedNotes, unarchiveNote } from '../../utils/local-data';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react'
+import { getArchivedNotes, unarchiveNote } from '../../utils/local-data';
+import { TbArchiveOff } from 'react-icons/tb';
+import { showFormattedDate } from '../../utils';
 
-const ArchivePage = () => {
-    const [archivedNote, setArchivedNote] = useState([])
-    const navigate = useNavigate();
-    useEffect(() => {
-        setArchivedNote(getArchivedNotes());
-        console.log(getArchivedNotes());
-    }, [])
-
-    const handleUnarchive = (id) => {
-        unarchiveNote(id);
-        setArchivedNote(getArchivedNotes());
+const ArchivePage = ({ keyword }) => {
+  const [archivedNotes, setArchivedNotes] = useState([])
+  
+  useEffect(() => {
+    const a = getArchivedNotes()
+    if (keyword){
+      const filteredNotes = a.filter((note) =>
+      note.title.toLowerCase().includes(keyword.toLowerCase()) ||
+      note.body.toLowerCase().includes(keyword.toLowerCase())
+    );
+    console.log(filteredNotes)
+    setArchivedNotes(filteredNotes);
+    } else {
+      setArchivedNotes(getArchivedNotes());
     }
-    return (
-    <>
-        <div onClick={() => navigate('/')}>back</div>
-        {
-         archivedNote.map((note,index) => 
-         (
-            <div key={ index } className="note-item">
-                <div className="note-item__title">
-                    { note.title }
-                </div>
+  }, [keyword])
 
-                <div className="note-item__createdAt">
-                    {
-                        new Date(note.createdAt).toLocaleDateString("id-ID", {
-                            day: "numeric",
-                            month: "long",
-                            year: "numeric"
-                        }) 
-                    }
-                </div>
+  const handleUnarchive = (id) => {
+      unarchiveNote(id);
+      setArchivedNotes(getArchivedNotes());
+  }
 
-                <div className="note-item__body">
-                    { note.body }
+  return (
+      <section className="app-container d-flex align-items-center p-5">
+        { archivedNotes.length ?
+          <div className="notes-list">
+            { archivedNotes.map((note, index) => 
+              (
+                <div key={ index } className="notes-item bg-dark container text-white p-5">
+                    <div className="note-item__title">
+                      { note.title }
+                    </div>
+
+                    <div className="note-item__createdAt">
+                      { showFormattedDate(note.createdAt) }
+                    </div>
+
+                    <div className="note-item__body mb-4">
+                      { note.body }
+                    </div>
+                    <button className="action" type="button" onClick={ () => handleUnarchive(note.id) }><TbArchiveOff /></button>
                 </div>
-                <button type="button" onClick={ () => handleUnarchive(note.id) }>Unarchive</button>
-            </div>
-         ))
-         }
-    </>
+              ))
+            }
+          </div>
+          :
+          <div className="note-list-empty position-absolute top-50 start-50"> 
+              <p className="text-white">"Tidak ada catatan"</p> 
+          </div> 
+        }
+        
+      </section>
   )
 }
 

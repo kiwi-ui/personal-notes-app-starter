@@ -1,102 +1,47 @@
-import React, { useEffect, useState } from 'react';
-import SearchBar from '../../components/SearchBar/SearchBar';
-import { useNavigate } from 'react-router-dom';
+import { FaPlus } from 'react-icons/fa';
+import { IoMdEye } from 'react-icons/io';
+import { MdDelete } from 'react-icons/md';
+import { TbArchive } from 'react-icons/tb';
+import { Link } from 'react-router-dom';
+import { showFormattedDate } from '../../utils';
 
-const HomePage = ({ notes, setNotes, setParams, handleSearch, handleGetDetailed, handleDeleteNote, handleArchive, navigate } ) => {
-//   const [notes, setNotes] = useState([]);
-//   const [searchParams, setSearchParams] = useSearchParams();
-//   const keyword = searchParams.get('keyword' || '');
-//   const navigate = useNavigate();
-
-//   useEffect(() => {
-// 	const activeNotes = getActiveNotes();
-// 	  if (keyword) {
-// 		const filteredNotes = activeNotes.filter((note) =>
-// 		  note.title.toLowerCase().includes(keyword.toLowerCase()) ||
-// 		  note.body.toLowerCase().includes(keyword.toLowerCase())
-// 		);
-// 		setNotes(filteredNotes);
-// 	  } else {
-// 		setNotes(activeNotes);
-// 	  }
-//   }, [keyword])
-
-
-//   const handleSearch = (query) => {
-// 	setSearchParams({keyword: query});
-//   }
-
-//   const handleGetDetailed = (id) => {
-// 	navigate(`/detail/${ id }`);
-//   }
-
-//   const handleDeleteNote = (id) => {
-// 	const confirmDelete = window.confirm('Yakin ingin menghapus catatan ini?');
-// 	if(confirmDelete){
-// 	  deleteNote(id);
-// 	  setNotes(getActiveNotes());
-// 	}
-//   }
-
-//   const handleArchive = (id) => {
-// 	archiveNote(id);
-// 	setNotes(getActiveNotes());
-//   }
-
+const HomePage = ({ notes, handleGetDetailed, handleDeleteNote, handleArchive } ) => {
   return (
-	<>
-		{/* <header></header> */}
-		<main className="main">
-			<button type="button" onClick={ () => navigate('/notes/new')}>Tambah Catatan</button>
-			<button type="button" onClick={ () => navigate('/archive') }>Archived pages</button>
-			{/* <SearchBar onSearch={ handleSearch }/> */}
+    <section className="app-container">
+      { notes.length ? 
+        <div className="notes-list">
+          { notes.map((note, index) =>
+            { return (
+              <div key={ index} className="notes-item card bg-dark text-light p-4 shadow-sm rounded-3 border-0 g-4">
+                  <div className="fw-bold note-item__title">
+                    { note.title }
+                  </div>
 
-			<div className="app-container body">
-				{ 
-					notes.length ? 
-						<div className="notes-list">
-							{
-								notes.map((note) =>
-									{
-										return (
-											<div key={ note.id } className="note-item">
-												<div className="note-item__title">
-													{ note.title }
-												</div>
+                  <div className="note-item__createdAt">
+                    { showFormattedDate(note.createdAt) }
+                  </div>
 
-												<div className="note-item__createdAt">
-													{
-														new Date(note.createdAt).toLocaleDateString("id-ID", {
-															day: "numeric",
-															month: "long",
-															year: "numeric"
-														}) 
-													}
-												</div>
+                  <div className="note-item__body mb-4">
+                    { note.body }
+                  </div>
 
-												<div className="note-item__body">
-													{ note.body }
-												</div>
-
-												<button type="button" onClick={ () => handleDeleteNote(note.id) }>Delete</button>
-												<button type="button" onClick={ () => handleArchive(note.id) }>Simpan</button>
-												<button type="button" onClick={ () => handleGetDetailed(note.id) }>See detail</button>	
-											</div>
-										) 
-									}
-								)
-							}
-						</div> 
-
-						:
-
-						<div className="note-list-empty">
-							<p className="p">"Tidak ada catatan"</p> 
-						</div> 
-				}
-			</div>
-		</main>
-	</>
+                  <div className="d-flex flex-row gap-3">
+                      <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail notes" onClick={ () => handleGetDetailed(note.id) }><IoMdEye color='white'/></button>	
+                      <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Archive note" onClick={ () => handleArchive(note.id) }><TbArchive color='white'/></button>
+                      <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete notes" onClick={ () => handleDeleteNote(note.id) }><MdDelete color='white'/></button>
+                  </div>
+                </div>
+              ) 
+            })
+          }
+        </div> 
+        :
+        <div className="note-list-empty position-absolute top-50 start-50">
+            <p className="text-white">"Tidak ada catatan"</p> 
+        </div> 
+      }
+        <Link type="button" className=" d-flex  p-3 rounded-3 position-sticky btn-add float-end me-3 action" to="/note/new"><FaPlus /></Link>
+    </section> 
   )
 }
 

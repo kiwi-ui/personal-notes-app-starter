@@ -1,12 +1,12 @@
 :root {
-  --primary: #BB86FC;
+  --primary: #7170c9;
   --primary-variant: #3700B3;
   --secondary: #03DAC6;
-  --background: #121212;
+  --background: #3f3b51;
   --surface: #121212;
   --error: #CF6679;
   --warning: #F39C12;
-  --on-background: #FFFFFF;
+  --on-background: #1f1d2c;
   --on-background-grey: #c7c7c7;
   --on-surface: #FFFFFF;
 }
@@ -32,11 +32,11 @@ a {
 
 body {
   font-family: 'Inter', sans-serif;
+  background-color: var(--background) !important;
 }
 
 .app-container {
   color: var(--on-background);
-  background-color: var(--background);
   min-height: 100vh;
   transition: all ease-in-out 0.5s;
 }
@@ -58,16 +58,12 @@ header .navigation ul li {
   font-size: 24px;
   margin: 0 8px;
 }
-
-main {
-  margin: 0 auto;
-  padding: 32px 0;
-  width: 90%;
-  max-width: 1200px;
+nav {
+  background: var(--background);
+  color: white !important;
 }
 
 .notes-list {
-  margin-top: 32px;
   display: grid;
   grid-template-columns: 1fr;
   gap: 16px;
@@ -148,8 +144,8 @@ main {
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  background-color: var(--on-background);
-  color: var(--background);
+  background-color: var(--primary);
+  color: white;
   padding: 8px;
   cursor: pointer;
 }
@@ -289,4 +285,13 @@ main {
   .notes-list {
     grid-template-columns: repeat(4, 1fr);
   }
+}
+
+.btn-add{
+  bottom: 10vh;
+  width: 50px;
+}
+
+.btn-sbmt {
+  background-color: var(--primary) !important;
 }
