@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { addNote, getActiveNotes } from '../../utils/local-data';
+import PropTypes from 'prop-types';
 
 const AddNotePage = ({ setNotes }) => {
   const [formData, setFormData] = useState({
@@ -64,3 +65,7 @@ const AddNotePage = ({ setNotes }) => {
 };
 
 export default AddNotePage;
+
+AddNotePage.propTypes = {
+  setNotes: PropTypes.func.isRequired
+}

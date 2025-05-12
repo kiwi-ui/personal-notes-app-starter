@@ -4,6 +4,7 @@ import { MdDelete } from 'react-icons/md';
 import { TbArchive } from 'react-icons/tb';
 import { Link } from 'react-router-dom';
 import { showFormattedDate } from '../../utils';
+import PropTypes from 'prop-types';
 
 const HomePage = ({ notes, handleGetDetailed, handleDeleteNote, handleArchive } ) => {
   return (
@@ -49,3 +50,10 @@ const HomePage = ({ notes, handleGetDetailed, handleDeleteNote, handleArchive } 
 }
 
 export default HomePage
+
+HomePage.propsTypes = {
+  notes: PropTypes.array.isRequired,
+  handleGetDetailed: PropTypes.func.isRequired,
+  handleDeleteNote: PropTypes.func.isRequired,
+  handleArchive: PropTypes.func.isRequired
+}
