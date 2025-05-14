@@ -23,6 +23,6 @@ const SearchBar = ({ onSearch }) => {
 
 export default SearchBar;
 
-SearchBar.propstypes = {
+SearchBar.propTypes = {
   onSearch: PropTypes.func.isRequired
 }

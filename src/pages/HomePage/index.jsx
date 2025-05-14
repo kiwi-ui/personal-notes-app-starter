@@ -51,7 +51,7 @@ const HomePage = ({ notes, handleGetDetailed, handleDeleteNote, handleArchive } 
 
 export default HomePage;
 
-HomePage.propsTypes = {
+HomePage.propTypes = {
   notes: PropTypes.array.isRequired,
   handleGetDetailed: PropTypes.func.isRequired,
   handleDeleteNote: PropTypes.func.isRequired,

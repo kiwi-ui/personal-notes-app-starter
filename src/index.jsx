@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { StrictMode } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './App';
 
@@ -9,7 +9,9 @@ import '../node_modules/bootstrap/dist/js/bootstrap';
 
 const root = createRoot(document.getElementById('root'));
 root.render(
-  <BrowserRouter>
-      <App />
-  </BrowserRouter>
+  <StrictMode>
+    <BrowserRouter>
+        <App />
+    </BrowserRouter>
+  </StrictMode>
 );

@@ -16,13 +16,13 @@ const AddNotePage = ({ setNotes }) => {
   };
   const handleAddNote = (event) => {
     event.preventDefault();
-    const activeNotes = getActiveNotes();
     if (!formData.title || !formData.body) {
       alert('Judul dan isi harus diisi');
       return;
     } else {
       addNote(formData);
-      setNotes([...activeNotes, formData]);
+      getActiveNotes()
+      // setNotes(getActiveNotes());
       setFormData({
         title: '',
         body: ''  

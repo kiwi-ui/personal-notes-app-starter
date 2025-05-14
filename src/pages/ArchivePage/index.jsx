@@ -4,7 +4,7 @@ import { TbArchiveOff } from 'react-icons/tb';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
 
-const ArchivePage = ({ keyword }) => {
+const ArchivePage = ({ keyword, setNotes }) => {
   const [archivedNotes, setArchivedNotes] = useState([])
   
   useEffect(() => {
@@ -23,6 +23,7 @@ const ArchivePage = ({ keyword }) => {
   const handleUnarchive = (id) => {
       unarchiveNote(id);
       setArchivedNotes(getArchivedNotes());
+      setNotes(getActiveNotes());
   }
 
   return (
@@ -63,6 +64,6 @@ const ArchivePage = ({ keyword }) => {
 
 export default ArchivePage;
 
-ArchivePage.propsTypes = {
+ArchivePage.propTypes = {
   keyword: PropTypes.string.isRequired
 }

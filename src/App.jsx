@@ -94,7 +94,7 @@ function App() {
                   }
                 />
                 <Route path='/detail/:id' element={ <DetailPage /> }/>
-                <Route path='/archive' element={ <ArchivePage keyword = { keyword } /> } />
+                <Route path='/archive' element={ <ArchivePage keyword = { keyword } setNotes={ setNotes } /> } />
                 <Route path='/note/new' element={ <AddNotePage setNotes = { setNotes } /> } /> 
                 <Route path='*' element={ <NotFoundPage /> } />
             </Routes>
