@@ -11,46 +11,10 @@ import { useNavigate, useSearchParams } from 'react-router-dom';
 
 
 function App() {
-  const [notes, setNotes] = useState([]);
   const [searchParams, setSearchParams] = useSearchParams();
   const keyword = searchParams.get('keyword') || '';
-  const navigate = useNavigate();
-
-  useEffect (() => {
-    const activeNotes = getActiveNotes();
-    if (keyword) {
-      const filteredNotes = activeNotes.filter((note) =>
-        note.title.toLowerCase().includes(keyword.toLowerCase()) ||
-        note.body.toLowerCase().includes(keyword.toLowerCase())
-      );
-
-      setNotes(filteredNotes);
-      console.log(notes)
-    } else {
-      setNotes(activeNotes);
-    }
-  }, [keyword]);
-
   const handleSearch = (query) => {
     setSearchParams({ keyword: query });
-  };
-
-  const handleGetDetailed = (id) => {
-    navigate(`/detail/${ id }`);
-  };
-
-  const handleDeleteNote = (id) => {
-    const confirmDelete = window.confirm('Yakin ingin menghapus catatan ini?');
-
-    if(confirmDelete){
-      deleteNote(id);
-      setNotes(getActiveNotes());
-    }
-  };
-
-  const handleArchive = (id) => {
-    archiveNote(id);
-    setNotes(getActiveNotes());
   };
 
   return (
@@ -78,24 +42,10 @@ function App() {
 
         <main>
             <Routes>
-                <Route 
-                  path='/' 
-                  element= { 
-                    <HomePage 
-                      notes = { notes } 
-                      setNotes = { setNotes } 
-                      setSearchParams = { setSearchParams }
-                      handleSearch = { handleSearch }
-                      handleGetDetailed = { handleGetDetailed }
-                      handleDeleteNote = { handleDeleteNote }
-                      handleArchive = { handleArchive }
-                      navigate= { navigate }
-                    /> 
-                  }
-                />
+                <Route path='/' element= { <HomePage keyword={ keyword }/> }/>
                 <Route path='/detail/:id' element={ <DetailPage /> }/>
-                <Route path='/archive' element={ <ArchivePage keyword = { keyword } setNotes={ setNotes } /> } />
-                <Route path='/note/new' element={ <AddNotePage setNotes = { setNotes } /> } /> 
+                <Route path='/archive' element={ <ArchivePage keyword = { keyword } /> } />
+                <Route path='/note/new' element={ <AddNotePage /> } /> 
                 <Route path='*' element={ <NotFoundPage /> } />
             </Routes>
         </main>

@@ -4,26 +4,24 @@ import { TbArchiveOff } from 'react-icons/tb';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
 
-const ArchivePage = ({ keyword, setNotes }) => {
+const ArchivePage = ({ keyword }) => {
   const [archivedNotes, setArchivedNotes] = useState([])
   
   useEffect(() => {
-    const notes = getArchivedNotes();
+    let notes = getArchivedNotes();
+
     if (keyword){
-      const filteredNotes = notes.filter((note) =>
-      note.title.toLowerCase().includes(keyword.toLowerCase()) ||
-      note.body.toLowerCase().includes(keyword.toLowerCase())
-    );
-    setArchivedNotes(filteredNotes);
-    } else {
-      setArchivedNotes(getArchivedNotes());
+      notes = notes.filter((note) =>
+        note.title.toLowerCase().includes(keyword.toLowerCase()) ||
+        note.body.toLowerCase().includes(keyword.toLowerCase())
+      );
     }
+    setArchivedNotes(notes);
   }, [keyword])
 
   const handleUnarchive = (id) => {
       unarchiveNote(id);
       setArchivedNotes(getArchivedNotes());
-      setNotes(getActiveNotes());
   }
 
   return (
@@ -50,12 +48,12 @@ const ArchivePage = ({ keyword, setNotes }) => {
             }
           </div>
           :
-        <div className="note-list-empty d-flex position-relative justify-content-center align-items-center" style={{height: '50vh'}}>
-            <p className="text-white text-center">
-                <h3>No Notes Available</h3>
-                <p>Please add a new note to get started.</p>
-            </p> 
-        </div> 
+          <div className="note-list-empty d-flex position-relative justify-content-center align-items-center" style={{height: '50vh'}}>
+              <div className="text-white text-center">
+                  <h3>No Notes Available</h3>
+                  <p>Please add a new note to get started.</p>
+              </div> 
+          </div> 
         }
         
       </section>
