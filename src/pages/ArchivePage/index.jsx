@@ -55,7 +55,6 @@ const ArchivePage = ({ keyword }) => {
               </div> 
           </div> 
         }
-        
       </section>
   )
 }

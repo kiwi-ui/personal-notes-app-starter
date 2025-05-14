@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { addNote, getActiveNotes } from '../../utils/local-data';
+import { addNote } from '../../utils/local-data';
 
 const AddNotePage = () => {
   const [formData, setFormData] = useState({
@@ -20,7 +20,6 @@ const AddNotePage = () => {
       return;
     } else {
       addNote(formData);
-      getActiveNotes()
       setFormData({
         title: '',
         body: ''  

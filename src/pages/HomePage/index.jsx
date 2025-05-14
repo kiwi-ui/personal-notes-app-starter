@@ -41,27 +41,27 @@ const HomePage = ({ keyword }) => {
   return (
     <section className="app-container">
       { activeNotes.length ? (
-            <div className="notes-list">
-              {activeNotes.map((note, index) => (
-                <div key={index} className="notes-item card bg-dark text-light p-4 shadow-sm rounded-3 border-0 g-4">
-                    <div className="fw-bold note-item__title">{ note.title }</div>
-                    <div className="note-item__createdAt">{ showFormattedDate(note.createdAt) }</div>
-                    <div className="note-item__body mb-4">{ note.body }</div>
-                    <div className="d-flex flex-row gap-3">
-                          <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail notes" onClick={ () => handleGetDetailed(note.id) }><IoMdEye color='white'/></button>	
-                          <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Archive note" onClick={ () => handleArchive(note.id) }><TbArchive color='white'/></button>
-                          <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete notes" onClick={ () => handleDeleteNote(note.id) }><MdDelete color='white'/></button>
-                    </div>
-                </div>
-              ))}
-            </div>
-        ) : (
-            <div className="note-list-empty d-flex position-relative justify-content-center align-items-center" style={{ height: '50vh' }}>
-              <div className="text-white text-center">
-                <h3>No Notes Available</h3>
-                <p>Please add a new note to get started.</p>
+          <div className="notes-list">
+            {activeNotes.map((note, index) => (
+              <div key={index} className="notes-item card bg-dark text-light p-4 shadow-sm rounded-3 border-0 g-4">
+                  <div className="fw-bold note-item__title">{ note.title }</div>
+                  <div className="note-item__createdAt">{ showFormattedDate(note.createdAt) }</div>
+                  <div className="note-item__body mb-4">{ note.body }</div>
+                  <div className="d-flex flex-row gap-3">
+                        <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Detail notes" onClick={ () => handleGetDetailed(note.id) }><IoMdEye color='white'/></button>	
+                        <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Archive note" onClick={ () => handleArchive(note.id) }><TbArchive color='white'/></button>
+                        <button type="button" className="action" data-bs-toggle="tooltip" data-bs-placement="top" title="Delete notes" onClick={ () => handleDeleteNote(note.id) }><MdDelete color='white'/></button>
+                  </div>
               </div>
+            ))}
+          </div>
+        ) : (
+          <div className="note-list-empty d-flex position-relative justify-content-center align-items-center" style={{ height: '50vh' }}>
+            <div className="text-white text-center">
+              <h3>No Notes Available</h3>
+              <p>Please add a new note to get started.</p>
             </div>
+          </div>
       )}
       <Link className="d-flex p-3 rounded-3 position-sticky btn-add float-end me-3 action" to="/note/new"><FaPlus /></Link>
     </section>
