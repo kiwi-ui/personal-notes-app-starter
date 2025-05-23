@@ -3,7 +3,6 @@ import { TbArchiveOff } from 'react-icons/tb';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
 import { getArchivedNotes, unarchiveNote } from '../../utils/network-data';
-import LoadingPage from '../../components/LoadingPage/LoadingPage';
 import LoadingIndicator from '../../components/loadingIndicator/LoadingIndicator';
 import ThemeContext from '../../ThemeContext/ThemeContext';
 
