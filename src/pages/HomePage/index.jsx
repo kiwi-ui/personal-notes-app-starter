@@ -6,7 +6,7 @@ import { TbArchive } from 'react-icons/tb';
 import { MdDelete } from 'react-icons/md';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
-import { deleteNote, getActiveNotes } from '../../utils/network-data';
+import { archiveNote, deleteNote, getActiveNotes } from '../../utils/network-data';
 
 const HomePage = ({ keyword }) => {
   const [activeNotes, setActiveNotes] = useState([]);
@@ -37,7 +37,6 @@ const HomePage = ({ keyword }) => {
 
   if (error) {
     alert("Gagal menghapus catatan. Mungkin karena Anda tidak memiliki akses.");
-    console.error("Delete error:", error, data);
     return;
   }
 
@@ -47,8 +46,13 @@ const HomePage = ({ keyword }) => {
 
 
   const handleArchive = async(id) => {
-    
-    setActiveNotes(getActiveNotes());
+    const { error, data } = await archiveNote(id);
+    if(error){
+      alert("Gagal mengarsipkan catatan. Mungkin karena Anda tidak memiliki akses.");
+      return;
+    }
+    alert("Catatan berhasil diarsipkan");
+    handleActiveNotes();
   };
 
   return (

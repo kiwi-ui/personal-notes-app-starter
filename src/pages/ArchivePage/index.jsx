@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react'
-import { getArchivedNotes, unarchiveNote } from '../../utils/local-data';
 import { TbArchiveOff } from 'react-icons/tb';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
+import { getArchivedNotes, unarchiveNote } from '../../utils/network-data';
 
 const ArchivePage = ({ keyword }) => {
   const [archivedNotes, setArchivedNotes] = useState([])
   
   useEffect(() => {
-    let notes = getArchivedNotes();
+    let notes = handleGetArchivedNotes();
 
     if (keyword){
       notes = notes.filter((note) =>
@@ -18,10 +18,20 @@ const ArchivePage = ({ keyword }) => {
     }
     setArchivedNotes(notes);
   }, [keyword])
+  const handleGetArchivedNotes = async () => {
+    const { data } = await getArchivedNotes();
+    setArchivedNotes(data);
+    return data
+  }
+  const handleUnarchive = async(id) => {
+      const {data, error} = await unarchiveNote(id);
 
-  const handleUnarchive = (id) => {
-      unarchiveNote(id);
-      setArchivedNotes(getArchivedNotes());
+      if (error) {
+        alert("Gagal mengembalikan catatan. Mungkin karena Anda tidak memiliki akses.");
+        return;
+      }
+      alert("Catatan berhasil dikembalikan");
+      handleGetArchivedNotes(); 
   }
 
   return (
