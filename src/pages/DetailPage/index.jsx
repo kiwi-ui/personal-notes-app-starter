@@ -1,24 +1,33 @@
 import { showFormattedDate } from '../../utils';
-import { getNote } from '../../utils/local-data'
 import { useParams } from 'react-router-dom'
+import { getNote } from '../../utils/network-data';
+import { useEffect, useState } from 'react';
 
 const DetailPage = () => {
+  const [notes, setNotes] = useState([]);
+  useEffect(() => {
+    handleGetDetailed();
+  }, [])
+  const handleGetDetailed = async () => {
+    const { data } = await getNote(id);
+    console.log(data)
+    setNotes(data);
+  };
   const { id } = useParams();
-  const note = getNote(id);
 
   return (
     <section className="text-white app-container d-flex flex-column justify-content-center">
         <div className="detail-page w-75">
             <div className="detail-page__title">
-              { note.title }
+              { notes.title }
             </div>
         
             <div className="detail-page__createdAt">
-              { showFormattedDate(note.createdAt) }
+              { showFormattedDate(notes.createdAt) }
             </div>
           
             <div className="detail-page__body">
-              { note.body }
+              { notes.body }
             </div>
         </div> 
     </section>

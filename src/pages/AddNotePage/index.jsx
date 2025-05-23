@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { addNote } from '../../utils/local-data';
+import { addNote } from '../../utils/network-data';
 
 const AddNotePage = () => {
   const [formData, setFormData] = useState({
@@ -13,13 +13,13 @@ const AddNotePage = () => {
       [name]: value
     });
   };
-  const handleAddNote = (event) => {
+  const handleAddNote = async(event) => {
     event.preventDefault();
     if (!formData.title || !formData.body) {
       alert('Judul dan isi harus diisi');
       return;
     } else {
-      addNote(formData);
+      await addNote(formData);
       setFormData({
         title: '',
         body: ''  

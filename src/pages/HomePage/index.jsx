@@ -1,36 +1,39 @@
 import { useState, useEffect } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { archiveNote, deleteNote, getActiveNotes } from '../../utils/local-data';
 import { FaPlus } from 'react-icons/fa';
 import { IoMdEye } from 'react-icons/io';
 import { TbArchive } from 'react-icons/tb';
 import { MdDelete } from 'react-icons/md';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
+import { deleteNote, getActiveNotes } from '../../utils/network-data';
 
 const HomePage = ({ keyword }) => {
   const [activeNotes, setActiveNotes] = useState([]);
   const navigate = useNavigate();
-
+  
   useEffect(() => {
-    let notes = getActiveNotes();
-
+    handleActiveNotes();
     if (keyword) {
-      notes = notes.filter((note) =>
+      const filteredActiveNotes = activeNotes.filter((note) =>
         note.title.toLowerCase().includes(keyword.toLowerCase()) ||
         note.body.toLowerCase().includes(keyword.toLowerCase())
       );
+      setActiveNotes(filteredActiveNotes);  
     }
-    setActiveNotes(notes);  
   }, [keyword]);
-
-  const handleGetDetailed = (id) => {
+  
+  const handleActiveNotes = async () => {
+    const { data } = await getActiveNotes();
+    setActiveNotes(data);
+  }
+  const handleGetDetailed = async(id) => {
     navigate(`/detail/${id}`);
   };
 
-  const handleDeleteNote = (id) => {
-    deleteNote(id);
-    setActiveNotes(getActiveNotes());
+  const handleDeleteNote = async(id) => {
+    const {data} = await deleteNote(id);
+    setActiveNotes(data);
   };
 
   const handleArchive = (id) => {
