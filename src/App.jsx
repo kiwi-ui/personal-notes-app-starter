@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { Suspense, useEffect, useMemo, useState } from 'react';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
 import { Link, Route, Routes } from 'react-router-dom';
@@ -6,13 +6,13 @@ import ArchivePage from './pages/ArchivePage';
 import AddNotePage from './pages/AddNotePage';
 import NotFoundPage from './pages/NotFoundPage';
 import SearchBar from './components/SearchBar/SearchBar';
-import { archiveNote, deleteNote, getActiveNotes } from './utils/local-data';
 import { useNavigate, useSearchParams } from 'react-router-dom';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { getUserLogged } from './utils/network-data';
 import { LuLogOut } from 'react-icons/lu';
 import ThemeContext from './ThemeContext/ThemeContext';
+import LoadingPage from './components/LoadingPage/LoadingPage';
 
 
 function App() {
@@ -33,16 +33,15 @@ function App() {
     setTheme(savedTheme);
   }, []);
   useEffect(() => {
-    const fetchUser = async () => {
-        const response = await getUserLogged();
-        if (!response.error && response.data) {
-          setAuthedUser(response.data);
-        }
-        setInitializing(false);
-    };
-
     fetchUser();
   }, []);
+  const fetchUser = async () => {
+    const response = await getUserLogged();
+    if (!response.error && response.data) {
+      setAuthedUser(response.data);
+    }
+    setInitializing(false);
+  };
   const onLoginSuccess = () => {
     getUserLogged().then((response) => {
       if (!response.error && response.data) {
@@ -55,7 +54,6 @@ function App() {
       setAuthedUser(null);
       Navigate('/login');
   }
-
   const toggleTheme = () => {
     setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
   };
@@ -68,65 +66,68 @@ function App() {
 
   if(authedUser === null){
     return (
-        <div className='contact-app'>
+      <div className='contact-app'>
           <header className='contact-app__header'>
             <h1>Aplikasi Kontak</h1>
           </header>
+
           <main>
             <Routes>
               <Route path="/*" element={<LoginPage onLoginSuccess={ onLoginSuccess }/>} />
               <Route path="/register" element={<RegisterPage />} />
             </Routes>
           </main>
-        </div>
+      </div>
     )
   }
 
   return (  
-      <>
-        <ThemeContext.Provider value={themeContextValue}>
-            <nav className="navbar navbar-expand-lg py-3"> 
-              <div className="container-fluid">
-                    <a className="navbar-brand">Notes App</a>
-                    <button className="bg-white navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
-                        <span className="navbar-toggler-icon"></span>
-                    </button>
+    <>
+      <ThemeContext.Provider value={themeContextValue}>
+        <Suspense fallback={<LoadingPage />}>
+          <nav className="navbar navbar-expand-lg py-3"> 
+            <div className="container-fluid">
+                  <a className="navbar-brand">Notes App</a>
+                  <button className="bg-white navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavAltMarkup" aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                      <span className="navbar-toggler-icon"></span>
+                  </button>
 
-                    <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
-                        <ul className=" nav nav-underline gap-2">
-                            <li className="nav-item">
-                                <Link className="pb-1  nav-link text-decoration-none" to="/home">Home</Link>
-                            </li>
-                            <li className="nav-item">
-                                <Link className="pb-1  nav-link text-decoration-none" to="/archive">Archive</Link>
-                            </li>
-                        </ul>
-                        <div className="nav">
-                          <SearchBar onSearch={ handleSearch }/>
-                          <button className="toggle-theme" onClick={toggleTheme}>
-                            {theme === 'dark' ? '🌞' : '🌙'}
-                          </button>
-                          <button className='btn btn-lg' type="button" onClick={onLogoutSuccess}><LuLogOut color='white'/></button>
-                        </div>
-                    </div>
-                </div>
-            </nav>
+                  <div className="collapse navbar-collapse justify-content-between" id="navbarNavAltMarkup">
+                      <ul className=" nav nav-underline gap-2">
+                          <li className="nav-item">
+                              <Link className="pb-1  nav-link text-decoration-none" to="/home">Home</Link>
+                          </li>
+                          <li className="nav-item">
+                              <Link className="pb-1  nav-link text-decoration-none" to="/archive">Archive</Link>
+                          </li>
+                      </ul>
+                      <div className="nav">
+                        <SearchBar onSearch={ handleSearch }/>
+                        <button className="toggle-theme" onClick={toggleTheme}>
+                          {theme === 'dark' ? '🌞' : '🌙'}
+                        </button>
+                        <button className='btn btn-lg' type="button" onClick={onLogoutSuccess}><LuLogOut color='white'/></button>
+                      </div>
+                  </div>
+              </div>
+          </nav>
 
-            <main>
-              <Routes>
-                  <Route path='/home' element= { <HomePage keyword={ keyword }/> }/>
-                  <Route path='/detail/:id' element={ <DetailPage /> }/>
-                  <Route path='/archive' element={ <ArchivePage keyword = { keyword } /> } />
-                  <Route path='/note/new' element={ <AddNotePage /> } /> 
-                  <Route path='*' element={ <NotFoundPage /> } />
-                </Routes>
-            </main>
+          <main>
+            <Routes>
+                <Route path='/home' element= { <HomePage keyword={ keyword }/> }/>
+                <Route path='/detail/:id' element={ <DetailPage /> }/>
+                <Route path='/archive' element={ <ArchivePage keyword = { keyword } /> } />
+                <Route path='/note/new' element={ <AddNotePage /> } /> 
+                <Route path='*' element={ <NotFoundPage /> } />
+              </Routes>
+          </main>
 
-            <footer className="bg-dark  bottom-0 py-3 position-relative w-100 d-flex">
-              <p className="mb-0 text-center w-100">© {new Date().getFullYear()} Yusni Anggara. All rights reserved.</p>
-            </footer>
-        </ThemeContext.Provider>
-      </>
+          <footer className="bg-dark  bottom-0 py-3 position-relative w-100 d-flex">
+            <p className="mb-0 text-center w-100">© {new Date().getFullYear()} Yusni Anggara. All rights reserved.</p>
+          </footer>
+        </Suspense>
+      </ThemeContext.Provider>
+    </>
       
   )
 }

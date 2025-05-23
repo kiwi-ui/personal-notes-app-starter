@@ -19,6 +19,7 @@
   --on-background-grey: #6d6d6d;
   --on-surface: #333333;
   --text: #121212
+  --primary: #333333
 }
 
 * {
@@ -27,7 +28,9 @@
   box-sizing: border-box;
   color: var(--text) !important;
 }
-
+input, textarea{
+  color:black !important
+}
 a {
   color: var(--on-background);
 }

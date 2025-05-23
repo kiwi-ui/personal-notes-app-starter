@@ -1,11 +1,12 @@
 import { useState } from 'react'
 import { addNote } from '../../utils/network-data';
-
+import LoadingPage from '../../components/LoadingPage/LoadingPage';
 const AddNotePage = () => {
   const [formData, setFormData] = useState({
     title: '',
     body: ''
   });
+  const [loading, setLoading] = useState(false);
   const handleChange = (event) => {
     const { name, value } = event.target;
     setFormData({
@@ -15,15 +16,19 @@ const AddNotePage = () => {
   };
   const handleAddNote = async(event) => {
     event.preventDefault();
-    if (!formData.title || !formData.body) {
-      alert('Judul dan isi harus diisi');
-      return;
-    } else {
+    try {
+      setLoading(true);
       await addNote(formData);
       setFormData({
         title: '',
         body: ''  
       })
+      setLoading(false);
+    } catch (error) {
+      if (!formData.title || !formData.body) {
+        return;
+      }
+      alert('Gagal menambahkan catatan');
     }
   }
 
@@ -41,6 +46,7 @@ const AddNotePage = () => {
                     value={ formData.title }
                     onChange={ handleChange }
                 />
+                { formData.title === '' && <p className='text-danger mb-0'>Judul harus diisi</p> }
             </div>
 
             <div className="mb-3">
@@ -53,9 +59,12 @@ const AddNotePage = () => {
                     onChange={ handleChange }
                     rows="3"
                 />
+                { formData.body === '' && <p className='text-danger mb-0'>body harus diisi</p> }
             </div>
 
-            <button className="btn-sbmt btn text-white fw-semibold" type="submit">Submit</button>
+            <button className="btn-sbmt btn text-white fw-semibold" type="submit">
+              {loading ? <LoadingPage /> : 'submit'}
+            </button>
         </form>
     </section>
   );

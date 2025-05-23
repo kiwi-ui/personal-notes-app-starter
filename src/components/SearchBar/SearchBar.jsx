@@ -15,7 +15,8 @@ const SearchBar = ({ onSearch }) => {
             placeholder="Search"
             value={ searchTerm }
             onChange={ handleInputChange }
-            className="form-control me-2" aria-label="Search"
+            className="form-control me-2 text-black" 
+            aria-label="Search"
         />
     </form>
   );
