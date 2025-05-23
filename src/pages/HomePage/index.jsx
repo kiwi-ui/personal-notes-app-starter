@@ -28,16 +28,26 @@ const HomePage = ({ keyword }) => {
     setActiveNotes(data);
   }
   const handleGetDetailed = async(id) => {
+
     navigate(`/detail/${id}`);
   };
 
   const handleDeleteNote = async(id) => {
-    const {data} = await deleteNote(id);
-    setActiveNotes(data);
-  };
+  const { error, data } = await deleteNote(id);
 
-  const handleArchive = (id) => {
-    archiveNote(id);
+  if (error) {
+    alert("Gagal menghapus catatan. Mungkin karena Anda tidak memiliki akses.");
+    console.error("Delete error:", error, data);
+    return;
+  }
+
+  alert("Catatan berhasil dihapus");
+  handleActiveNotes();
+};
+
+
+  const handleArchive = async(id) => {
+    
     setActiveNotes(getActiveNotes());
   };
 
