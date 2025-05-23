@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FaPlus } from 'react-icons/fa';
 import { IoMdEye } from 'react-icons/io';
@@ -7,11 +7,12 @@ import { MdDelete } from 'react-icons/md';
 import { showFormattedDate } from '../../utils';
 import PropTypes from 'prop-types';
 import { archiveNote, deleteNote, getActiveNotes } from '../../utils/network-data';
+import ThemeContext from '../../ThemeContext/ThemeContext';
 
 const HomePage = ({ keyword }) => {
   const [activeNotes, setActiveNotes] = useState([]);
   const navigate = useNavigate();
-  
+  const {theme} = useContext(ThemeContext);
   useEffect(() => {
     handleActiveNotes();
     if (keyword) {
@@ -60,7 +61,7 @@ const HomePage = ({ keyword }) => {
       { activeNotes.length ? (
           <div className="notes-list">
             {activeNotes.map((note, index) => (
-              <div key={index} className="notes-item card bg-dark text-light p-4 shadow-sm rounded-3 border-0 g-4">
+              <div key={index} className="note-item card p-4 shadow-sm rounded-3 border-0 g-4">
                   <div className="fw-bold note-item__title">{ note.title }</div>
                   <div className="note-item__createdAt">{ showFormattedDate(note.createdAt) }</div>
                   <div className="note-item__body mb-4">{ note.body }</div>

@@ -17,15 +17,14 @@ const RegisterPage = () => {
     console.log(passwordMatch);
   }, [confirmPassword])
   
-  const {navigate} = useNavigate();
+  const navigate = useNavigate();
   const onNameChange = (event) => setFormData({ ...formData, name: event.target.value });
   const onEmailChange = (event) => setFormData({ ...formData, email: event.target.value });
   const onPasswordChange = (event) => setFormData({ ...formData, password: event.target.value });
   const onPasswordConfirmationChange = (event) => setConfirmPassword(event.target.value);
   const submitHandler = async (event) => {
     event.preventDefault();
-    await register(formData);
-    const {error} = register(formData);
+    const {error} = await register(formData);
     if (!error) {
       navigate('/login');
     }

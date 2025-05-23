@@ -9,6 +9,7 @@
   --on-background: #1f1d2c;
   --on-background-grey: #c7c7c7;
   --on-surface: #FFFFFF;
+ 
 }
 
 [data-theme="light"] {
@@ -17,12 +18,14 @@
   --on-background: #333333;
   --on-background-grey: #6d6d6d;
   --on-surface: #333333;
+  --text: #121212
 }
 
 * {
   padding: 0;
   margin: 0;
   box-sizing: border-box;
+  color: var(--text) !important;
 }
 
 a {
@@ -94,6 +97,7 @@ nav {
   color: var(--on-background-grey);
   font-size: 14px;
   margin: 4px 0;
+
 }
 
 .note-item__body {
@@ -144,7 +148,7 @@ nav {
   width: 50px;
   height: 50px;
   border-radius: 50px;
-  background-color: var(--primary);
+  background-color: var(--background);
   color: white;
   padding: 8px;
   cursor: pointer;

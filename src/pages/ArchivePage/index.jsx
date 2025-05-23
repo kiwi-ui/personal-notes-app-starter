@@ -40,7 +40,7 @@ const ArchivePage = ({ keyword }) => {
           <div className="notes-list">
             { archivedNotes.map((note, index) => 
               (
-                <div key={ index } className="notes-item bg-dark container text-white p-5">
+                <div key={ index } className="note-item card p-4 shadow-sm rounded-3 border-0 g-4">
                     <div className="note-item__title">
                       { note.title }
                     </div>
