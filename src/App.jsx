@@ -18,11 +18,19 @@ function App() {
   const [authedUser, setAuthedUser] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [initializing, setInitializing] = useState(true);
+  const [theme, setTheme] = useState('dark');
   const Navigate = useNavigate();
   const keyword = searchParams.get('keyword') || '';
   const handleSearch = (query) => {
     setSearchParams({ keyword: query });
   };
+  useEffect(() => {
+    document.documentElement.setAttribute('data-theme', theme);
+  }, [theme]);
+  useEffect(() => {
+    const savedTheme = localStorage.getItem('theme') || 'dark';
+    setTheme(savedTheme);
+  }, []);
   useEffect(() => {
     const fetchUser = async () => {
         const response = await getUserLogged();
@@ -36,9 +44,9 @@ function App() {
   }, []);
   const onLoginSuccess = () => {
     getUserLogged().then((response) => {
-        if (!response.error && response.data) {
+      if (!response.error && response.data) {
         setAuthedUser(response.data);
-        }
+      }
     });
   }  
   const onLogoutSuccess = () => {
@@ -46,6 +54,10 @@ function App() {
       setAuthedUser(null);
       Navigate('/login');
   }
+
+  const toggleTheme = () => {
+    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+  };
 
   if(authedUser === null){
     return (
@@ -83,6 +95,9 @@ function App() {
                       </ul>
                       <div className="nav">
                         <SearchBar onSearch={ handleSearch }/>
+                        <button className="toggle-theme" onClick={toggleTheme}>
+                          {theme === 'dark' ? '🌞' : '🌙'}
+                        </button>
                         <button className='btn btn-lg' type="button" onClick={onLogoutSuccess}><LuLogOut color='white'/></button>
                       </div>
                   </div>
