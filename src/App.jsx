@@ -13,6 +13,7 @@ import { getUserLogged } from './utils/network-data';
 import { LuLogOut } from 'react-icons/lu';
 import ThemeContext from './ThemeContext/ThemeContext';
 import LoadingPage from './components/LoadingPage/LoadingPage';
+import ToggleChangeTheme from './components/ToggleChangeTheme/ToggleChangeTheme';
 
 
 function App() {
@@ -28,10 +29,7 @@ function App() {
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
   }, [theme]);
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'dark';
-    setTheme(savedTheme);
-  }, []);
+
   useEffect(() => {
     fetchUser();
   }, []);
@@ -55,7 +53,8 @@ function App() {
       Navigate('/login');
   }
   const toggleTheme = () => {
-    setTheme((prevTheme) => (prevTheme === 'dark' ? 'light' : 'dark'));
+    setTheme(theme === 'dark' ? 'light' : 'dark');
+    localStorage.setItem('theme', theme); 
   };
   const themeContextValue = useMemo(() =>{
     return {
@@ -103,9 +102,7 @@ function App() {
                       </ul>
                       <div className="nav">
                         <SearchBar onSearch={ handleSearch }/>
-                        <button className="toggle-theme" onClick={toggleTheme}>
-                          {theme === 'dark' ? '🌞' : '🌙'}
-                        </button>
+                        <ToggleChangeTheme/>
                         <button className='btn btn-lg' type="button" onClick={onLogoutSuccess}><LuLogOut color='white'/></button>
                       </div>
                   </div>

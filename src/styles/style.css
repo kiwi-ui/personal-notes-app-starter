@@ -6,7 +6,7 @@
   --surface: #121212;
   --error: #CF6679;
   --warning: #F39C12;
-  --on-background: #1f1d2c;
+  --on-background: white;
   --on-background-grey: #c7c7c7;
   --on-surface: #FFFFFF;
  
@@ -32,7 +32,7 @@ input, textarea{
   color:black !important
 }
 a {
-  color: var(--on-background);
+  color: var(--on-background) !important;
 }
 
 

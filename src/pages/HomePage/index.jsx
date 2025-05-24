@@ -15,7 +15,7 @@ const HomePage = ({ keyword }) => {
   const [activeNotes, setActiveNotes] = useState([]);
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
-  const { theme, toggleTheme } = useContext(ThemeContext);
+  const { theme } = useContext(ThemeContext);
   useEffect(() => {
     const fetchAndFilterNotes = async () => {
       try {
