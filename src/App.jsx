@@ -1,12 +1,12 @@
 import { Suspense, useEffect, useMemo, useState } from 'react';
 import HomePage from './pages/HomePage';
 import DetailPage from './pages/DetailPage';
-import { Link, Route, Routes } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
 import ArchivePage from './pages/ArchivePage';
 import AddNotePage from './pages/AddNotePage';
 import NotFoundPage from './pages/NotFoundPage';
 import SearchBar from './components/SearchBar/SearchBar';
-import { useNavigate, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
 import RegisterPage from './pages/RegisterPage';
 import LoginPage from './pages/LoginPage';
 import { getUserLogged } from './utils/network-data';
@@ -20,8 +20,8 @@ function App() {
   const [authedUser, setAuthedUser] = useState(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [initializing, setInitializing] = useState(true);
-  const [theme, setTheme] = useState('dark');
-  const Navigate = useNavigate();
+  const [theme, setTheme] = useState(localStorage.getItem('theme') || 'dark');
+  const navigate = useNavigate();
   const keyword = searchParams.get('keyword') || '';
   const handleSearch = (query) => {
     setSearchParams({ keyword: query });
@@ -50,11 +50,12 @@ function App() {
   const onLogoutSuccess = () => {
       localStorage.removeItem('accessToken');
       setAuthedUser(null);
-      Navigate('/login');
+    navigate('/login');
   }
   const toggleTheme = () => {
+    const newTheme = theme === 'dark' ? 'light' : 'dark';
     setTheme(theme === 'dark' ? 'light' : 'dark');
-    localStorage.setItem('theme', theme); 
+    localStorage.setItem('theme', newTheme); 
   };
   const themeContextValue = useMemo(() =>{
     return {
@@ -72,8 +73,8 @@ function App() {
 
           <main>
             <Routes>
-              <Route path="/*" element={<LoginPage onLoginSuccess={ onLoginSuccess }/>} />
               <Route path="/register" element={<RegisterPage />} />
+              <Route path="/*" element={<LoginPage onLoginSuccess={ onLoginSuccess }/>} />
             </Routes>
           </main>
       </div>
