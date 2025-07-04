@@ -16,6 +16,7 @@ const HomePage = ({ keyword }) => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { theme } = useContext(ThemeContext);
+  
   useEffect(() => {
     const fetchAndFilterNotes = async () => {
       try {

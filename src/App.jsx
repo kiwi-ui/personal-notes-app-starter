@@ -14,6 +14,7 @@ import { LuLogOut } from 'react-icons/lu';
 import ThemeContext from './ThemeContext/ThemeContext';
 import LoadingPage from './components/LoadingPage/LoadingPage';
 import ToggleChangeTheme from './components/ToggleChangeTheme/ToggleChangeTheme';
+import SideMenu from './components/SideMenu/SIdeMenu';
 
 
 function App() {
@@ -110,6 +111,7 @@ function App() {
               </div>
           </nav>
 
+            <SideMenu />
           <main>
             <Routes>
                 <Route path='/home' element= { <HomePage keyword={ keyword }/> }/>

@@ -2,7 +2,7 @@
   --primary: #7170c9;
   --primary-variant: #3700B3;
   --secondary: #03DAC6;
-  --background: #3f3b51;
+  /* --background: #3f3b51; */
   --surface: #121212;
   --error: #CF6679;
   --warning: #F39C12;
@@ -15,7 +15,7 @@
 [data-theme="light"] {
   --background: #DDDDDD;
   --surface: #FFFFFF;
-  --on-background: #333333;
+  /* --on-background: #333333; */
   --on-background-grey: #6d6d6d;
   --on-surface: #333333;
   --text: #121212
